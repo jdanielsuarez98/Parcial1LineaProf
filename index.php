@@ -55,7 +55,7 @@
     foreach($_SESSION['tuits'] as $tuit){
         echo '<div> '. $tuit['texto'] .' </div>';
 
-        if (isset($usu) && $usu['Usuario']=$tuit['usuario']['Usuario']) {
+        if (isset($usu) && $usu['Usuario'] == $tuit['usuario']['Usuario']) {
             echo '
             <form method="post">
                 <input type="submit" name="delete" value="'. $tuit['id'] .'">
