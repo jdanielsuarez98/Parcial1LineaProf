@@ -22,11 +22,11 @@
 
 <?php 
         
-    function Limpieza($text){
-        $text = str_replace('<script>','',$text);
-        $text = htmlspecialchars($text);
-        return $text;
-    }
+    // function Limpieza($text){
+    //     $text = str_replace('<script>','',$text);
+    //     $text = htmlspecialchars($text);
+    //     return $text;
+    // }
 
     session_start();
 
@@ -81,8 +81,8 @@
 
     if($_SESSION['UsuarioConectado']!=null){
         $usuarios = $_SESSION['UsuarioConectado'];
-        $usuarios['Nombre'] = Limpieza($_POST['txtNombre']);
-        $usuarios['Apellido'] = Limpieza($_POST['txtApellido']);
+        $usuarios['Nombre'] = $_POST['txtNombre'];
+        $usuarios['Apellido'] = ['txtApellido'];
         $usuarios['Hijos'] = $_POST['txtHijos'];
         $usuarios['FechaNacimiento'] = $_POST['txtFechaNacimiento'];
         $usuarios['Usuario'] = $_POST['txtUsuario'];

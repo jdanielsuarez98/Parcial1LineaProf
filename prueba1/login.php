@@ -1,5 +1,13 @@
 <?php 
     session_start();
+    //Aqui toda la logica de php para validar el ingreso
+    require_once "libs/php/tools_gavit0.php";
+    require_once "libs/php/bd_gavit0.php";
+    MostrarErrores();
+
+    $tipoMensaje = "";
+    $mensaje = "";
+    
     if(isset($_SESSION['usuarios'])){
         if (isset($_POST['Ingresar'])) {
             $_SESSION['UsuarioConectado']=[];

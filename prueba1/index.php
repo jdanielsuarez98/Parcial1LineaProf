@@ -36,12 +36,12 @@
             if(isset($_SESSION['tuits'])== FALSE){
                 $_SESSION['tuits'] = [];
             }
-            
+
             $usu = $_SESSION['UsuarioConectado'];
             if(isset($_POST['btnTuit'])){
                 $tuit = [
                     'id' => time(),
-                    'texto' => $_POST['txtMensaje'],
+                    'texto' => limpieza($_POST['txtMensaje']),
                     'usuario' => $usu
                 ];
         
@@ -94,9 +94,9 @@
     }
 
     function Limpieza($text){
-        // $text = str_replace('<script>','',$text);
-        // $text = htmlspecialchars($text);
-        // return $text;
+        $text = str_replace('<script>','',$text);
+        $text = htmlspecialchars($text);
+        return $text;
     }
 
     if (isset($_POST['delete'])) {
