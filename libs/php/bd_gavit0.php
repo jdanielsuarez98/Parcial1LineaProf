@@ -21,9 +21,9 @@
         }
 
         
-        function RegistrarUsuarioDB($my_Db_Connection, $Nombre, $Apellido,$Fecha_nacimiento,$Foto,$Cantidad_Hijos,$Color,$Usuario, $Clave,){
+        function RegistrarUsuarioDB($my_Db_Connection, $NOMBRE, $APELLIDO,$FECHA_NACIMIENTO,$FOTO,$CANTIDAD_HIJOS,$COLOR,$USUARIO,$CLAVE,){
             $my_Insert_Statement =
-                $my_Db_Connection->prepare("INSERT INTO `usuarios`(`NOMBRE`, `APELLIDO`, `FECHA_NACIMIENTO`, `FOTO`, `CANTIDAD_HIJOS`, `COLOR`, `USUARIO`, `CLAVE`)" 
+                $my_Db_Connection->prepare("INSERT INTO `usuarios`(`NOMBRE`,`APELLIDO`,`FECHA_NACIMIENTO`,`FOTO`,`CANTIDAD_HIJOS`,`COLOR`,`USUARIO`,`CLAVE`)" .
                 "VALUES (:NOMBRE,:APELLIDO,:FECHA_NACIMIENTO,:FOTO,:CANTIDAD_HIJOS,:COLOR,:USUARIO,:CLAVE)");
 
             $my_Insert_Statement->bindParam(':NOMBRE',$NOMBRE);
