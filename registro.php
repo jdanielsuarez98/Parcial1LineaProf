@@ -1,9 +1,9 @@
 <?php
-    IniciarSesionSegura();
-
     require_once "libs/php/tools_daniel.php";
     require_once "libs/php/db_daniel.php";
     MostrarErrores();
+    IniciarSesionSegura();
+    LimpiarEntradas();
 
     //actualizar usuario
     if(isset($_POST['btnActualizar']) )
@@ -19,9 +19,8 @@
                     }
                     else {
                         //Imagen concuerda, Entra
-                        if (move_uploaded_file($temp, 'images/'.$archivo)) {
+                        if (move_uploaded_file($temp, 'uploaded_files/'.$archivo)) {
                             //Permisos
-                            chmod('images/'.$archivo, 0777);
                             $nombre = $_POST['txtNombre'];
                             $apellido = $_POST['txtApellido'];
                             $nacimiento = $_POST['txtNacimiento'];
@@ -30,9 +29,9 @@
                             $color = ($_POST['colorPicker']);
                             $usuario = $_SESSION['UsuarioConectado'];
                             $CONN=ConexionDB();
-                             if ($CONN !=NULL)
-                             {
-                                ActualizarUsuariosDB($CONN,$usuario,$nombre,$apellido,$nacimiento,$color,$cantidad_hijos,$foto);  
+                            if ($CONN !=NULL)
+                            {
+                                ActualizarUsuariosDB($CONN,$usuario,$nombre,$apellido,$nacimiento,$cantidad_hijos,$color,$foto);  
                              
                             }   
 
@@ -94,7 +93,6 @@
                         //Imagen concuerda, Entra
                         if (move_uploaded_file($temp, '/uploaded_files'.$archivo)) {
                             //Permisos
-                            chmod('uploaded_files/'.$archivo, 0777);
                             $nombre = $_POST['txtNombre'];
                             $apellido = $_POST['txtApellido'];
                             $nacimiento = $_POST['txtNacimiento'];

@@ -1,10 +1,12 @@
 
 <?php
-    session_start();
 
     require_once "libs/php/tools_daniel.php";
     require_once "libs/php/db_daniel.php";
     MostrarErrores();
+    IniciarSesionSegura();
+    LimpiarEntradas();
+
 
     $tipoMensaje = "";
     $mensaje = "";
