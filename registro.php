@@ -19,7 +19,7 @@
                     }
                     else {
                         //Imagen concuerda, Entra
-                        if (move_uploaded_file($temp, 'uploaded_files/'.$archivo)) {
+                        if (move_uploaded_file($temp, './uploaded_files/'.$archivo)) {
                             //Permisos
                             $nombre = $_POST['txtNombre'];
                             $apellido = $_POST['txtApellido'];
@@ -48,36 +48,6 @@
     
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //crear ususario
-    if(isset($_SESSION['UsuarioConectado']))
-            {
-                echo '<div align="left">
-                <h3>ACTUALIZA TUS DATOS</h3><br>
-                <form method="post" enctype="multipart/form-data">
-                    <label for="txtNombre">Ingrese Su Nombre:</label>
-                    <input type="text" name="txtNombre" id="txtNombre" required><br><br>
-            
-                    <label for="txtApellido">Ingrese Su Apellido:</label>
-                    <input type="text" name="txtApellido" id="txtApellido" required><br><br>
-            
-                    <label for="txtNacimiento">Ingrese Su Fecha De Nacimiento:</label>
-                    <input type="date" name="txtNacimiento" id="txtNacimiento"required><br><br>
-            
-                    
-                    <label for="archivo">Foto:</label>
-                    <input type="file" name="archivo" id="archivo" accept="image/*" requerid/><br><br>
-            
-                    <label for="colorPicker">Ingrese El Color que desea:</label>
-                    <input type="color" name="colorPicker" id="colorPicker" required><br><br>
-
-                    <label for="txtCantidadHijos">Ingrese La cantidad De Hijos:</label>
-                    <input type="number" name="txtCantidadHijos" id="txtCantidadHijos" required><br><br>
-            
-                    <input type="submit" name="btnActualizar" Value="Actualizar">
-                </form> 
-            </div>';
-             exit();   
-            }
-      
             if(isset($_POST['btnRegistrar']) )
             {
                 $archivo = $_FILES['archivo']['name'];
@@ -91,7 +61,7 @@
                     }
                     else {
                         //Imagen concuerda, Entra
-                        if (move_uploaded_file($temp, '/uploaded_files'.$archivo)) {
+                        if (move_uploaded_file($temp, './uploaded_files/'.$archivo)) {
                             //Permisos
                             $nombre = $_POST['txtNombre'];
                             $apellido = $_POST['txtApellido'];
@@ -121,33 +91,66 @@
     
 ?>
 <div align="left">
-    <h3>REGISTRATE AQUI!!!</h3><br>
-    <form method="post" enctype="multipart/form-data">
-        <label for="txtNombre">Ingrese Su Nombre:</label>
-        <input type="text" name="txtNombre" id="txtNombre" required><br><br>
+    <?php
+        if(isset($_SESSION['UsuarioConectado']))
+        {
+            $registros=ConexionDB()->query("SELECT `Nombre`, `Apellido`, `FNacimiento`, `Foto`, `Hijos`,`Color` FROM `usuarios`WHERE Usuario='".$_SESSION['UsuarioConectado']."'")->fetchAll(PDO::FETCH_OBJ);
+                        foreach($registros as $persona): 
+            ?>
+            <h3>ACTUALIZATE AQUI!!!</h3><br>
+            <form method="post" enctype="multipart/form-data">
+                <label for="txtNombre">Ingrese Su Nombre:</label>
+                <input type="text" name="txtNombre" id="txtNombre" value="<?php echo $persona->Nombre ?>" required><br><br>
 
-        <label for="txtApellido">Ingrese Su Apellido:</label>
-        <input type="text" name="txtApellido" id="txtApellido" required><br><br>
+                <label for="txtApellido">Ingrese Su Apellido:</label>
+                <input type="text" name="txtApellido" id="txtApellido" value="<?php echo $persona->Apellido ?>" required><br><br>
 
-        <label for="txtNacimiento">Ingrese Su Fecha De Nacimiento:</label>
-        <input type="date" name="txtNacimiento" id="txtNacimiento"required><br><br>
+                <label for="txtNacimiento">Ingrese Su Fecha De Nacimiento:</label>
+                <input type="date" name="txtNacimiento" id="txtNacimiento" value="<?php echo $persona->FNacimiento ?>" required><br><br>
+                
+                <label for="archivo">Foto:</label>
+                <input type="file" name="archivo" id="archivo" accept="image/*" value="<?php echo $persona->Foto ?>" requerid/><br><br>
 
-        
-        <label for="archivo">Foto:</label>
-        <input type="file" name="archivo" id="archivo" accept="image/*" requerid/><br><br>
+                <label for="colorPicker">Ingrese El Color que desea:</label>
+                <input type="color" name="colorPicker" id="colorPicker" value="<?php echo $persona->Color ?>" required><br><br>
 
-        <label for="colorPicker">Ingrese El Color que desea:</label>
-        <input type="color" name="colorPicker" id="colorPicker" required><br><br>
+                <label for="txtCantidadHijos">Ingrese La cantidad De Hijos:</label>
+                <input type="number" name="txtCantidadHijos" id="txtCantidadHijos" value="<?php echo $persona->Hijos ?>" required><br><br>
 
-        <label for="txtCantidadHijos">Ingrese La cantidad De Hijos:</label>
-        <input type="number" name="txtCantidadHijos" id="txtCantidadHijos" required><br><br>
+                <input type="submit" name="btnActualizar" Value="Actualizar">
+            </form> 
+    <?php 
+            endforeach;
+        }else{
+    ?>
+        <h3>REGISTRATE AQUI!!!</h3><br>
+        <form method="post" enctype="multipart/form-data">
+            <label for="txtNombre">Ingrese Su Nombre:</label>
+            <input type="text" name="txtNombre" id="txtNombre" required><br><br>
 
-        <label for="txtUsuario">Ingrese Su Usuario:</label>
-        <input type="text" name="txtUsuario" id="txtUsuario" required><br><br>
+            <label for="txtApellido">Ingrese Su Apellido:</label>
+            <input type="text" name="txtApellido" id="txtApellido" required><br><br>
 
-        <label for="txtClave">Confirme Su Contraseña:</label>
-        <input type="password" name="txtClave" id="txtClave"required><br><br><br>
+            <label for="txtNacimiento">Ingrese Su Fecha De Nacimiento:</label>
+            <input type="date" name="txtNacimiento" id="txtNacimiento"required><br><br>
+            
+            <label for="archivo">Foto:</label>
+            <input type="file" name="archivo" id="archivo" accept="image/*" requerid/><br><br>
 
-        <input type="submit" name="btnRegistrar" Value="Registrarse">
-    </form> 
-</div>
+            <label for="colorPicker">Ingrese El Color que desea:</label>
+            <input type="color" name="colorPicker" id="colorPicker" required><br><br>
+
+            <label for="txtCantidadHijos">Ingrese La cantidad De Hijos:</label>
+            <input type="number" name="txtCantidadHijos" id="txtCantidadHijos" required><br><br>
+
+            <label for="txtUsuario">Ingrese Su Usuario:</label>
+            <input type="text" name="txtUsuario" id="txtUsuario" required><br><br>
+
+            <label for="txtClave">Confirme Su Contraseña:</label>
+            <input type="password" name="txtClave" id="txtClave"required><br><br><br>
+
+            <input type="submit" name="btnRegistrar" Value="Registrarse">
+        </form> 
+    <?php
+        }   
+    ?>
