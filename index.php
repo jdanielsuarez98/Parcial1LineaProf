@@ -130,29 +130,32 @@
             }
         }
         else {
-            echo 'Inicia sesion para poder comentar en el chat general';
+            echo ' <b> Inicia sesion para poder comentar en el chat general </b>'. '<br><br>';
         }
+        $CONN = ConexionDB();
         $tuitss = MostrarTuits($CONN);
         //foreach ($tuitss as $key => $value) {
-        $registros=$base->query("SELECT Id FROM mensaje")->fetchAll(PDO::FETCH_OBJ);
+        $registros=ConexionDB()->query("SELECT Id,Usuario,tuit FROM mensajes")->fetchAll(PDO::FETCH_OBJ);
         foreach($registros as $tuits){ 
-            
-            if ($value["Usuario"] == $_SESSION['UsuarioConectado']) {
-                echo '<form " method="post">'.
-               // $value["Usuario"].' Comment: '.  $value["tuit"].'
-                $tuits -> 
-                '<a href="db_daniel.php?borrar=id=<?php echo $tuits->Id?> name="btnBorrarTuit">Borrar</a>
-                </form>';
-                
+            if(!isset($_SESSION['UsuarioConectado'])){
+                echo 'Usuario: <b>'. $tuits ->Usuario . '</b>, Comento: ' . $tuits ->tuit .'<br><br>';
             }
-            else {
-                echo $value["Usuario"].' Comment: '.  $value["tuit"].'<br><br>';
+            else{
+                $usu = $_SESSION['UsuarioConectado'];  
+                if (isset($usu) && $usu == $tuits->Usuario) {
+                    echo 'Usuario: <b>'. $tuits ->Usuario . '</b>, Comento: ' . $tuits ->tuit;
+                    ?>
+                    <a href="borrartuit.php?id=<?php echo $tuits->Id?>">
+                    <button type="button" name="Borrar" id="Borrar">Borrar</button>  
+                    </a><br><br>
+                    
+                    <?php   
+                }else{
+                    echo 'Usuario: <b>'. $tuits ->Usuario . '</b>, Comento: ' . $tuits ->tuit .'<br><br>';
+                }
+
             }
 
-            if (isset($_POST["borrar"])) {
-                borrarTuit($CONN,$value["Id"]);
-                
-            }
         }
 
     ?>
@@ -160,13 +163,3 @@
 </div>
 
 <?php 
-                    if ($_SESSION["rol_cc"] == 1) {
-                        ?>href="Actualizar_Empleados?editar=<?php echo $ID_PERSONA; ?> ">
-                        <?php
-                            if(isset($_GET['editar'])){
-                                include("Crud_Actualizar_Empleado.php");
-                            }
-                    }
-                    ?>
-                <font color="blue">Actualizar</font></a></td>
-                </tr>

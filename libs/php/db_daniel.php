@@ -41,15 +41,12 @@
     }
 
     function publicarTuit($my_Db_Connection,$usuario,$tuit){
-
         $my_Insert_Statement=
             $my_Db_Connection->prepare("INSERT INTO mensajes (Usuario,tuit)".
             "VALUES (:Usuario, :tuit)");
         $my_Insert_Statement->bindParam(':Usuario',$usuario);
         $my_Insert_Statement->bindParam(':tuit',$tuit);
-
         if ($my_Insert_Statement->execute()) {
-            '<script>alert("Compartido")</script>';
             return TRUE;
         }else{
             echo "No se pudo compartir";
@@ -58,16 +55,11 @@
     }
 
 
-
-
-    if (isset($_GET["Id"])) {
-
-        $Id=$_GET["Id"];
-
+    function BorrarTuit($my_Db_Connection,$Id){
         $my_Delete_Statement=
             $my_Db_Connection->prepare("DELETE FROM `mensajes` WHERE `Id`=$Id");
 
-            $my_Delete_Statement->execute(['Usuario'=>$usuario,'tuit'=>$tuit]);
+            $my_Delete_Statement->execute(['Id'=>$Id]);
 
         if ($my_Delete_Statement->execute()) {
             '<script>alert("Eliminado")</script>';
@@ -131,7 +123,6 @@
 
 
     function ValidarLoginDB($my_Db_Connection, $usuario, $clave){
-        // $token = '';
         $my_Select_Statement = 
             $my_Db_Connection->prepare("SELECT `Usuario` FROM `usuarios` WHERE `Usuario`='$usuario' and `Clave`='$clave'");
             
@@ -139,20 +130,11 @@
         $user = $my_Select_Statement->fetch();
         if($user){
             return true;
-            // echo 'Si loggeo en ValidarLoginDB ';
-            // $token = md5(time() . $usuario);
         }
-        // echo $token;
+
         return false;
-        // return $token;
+
     } 
-    /**
-     * Retorna un listado de usuarios registrados
-     * 
-     * @param @$my_Db_Connection: Objeto conexion
-     * 
-     * @return Lista de usuarios disponibles
-     */
     function ListarUsuarios($my_Db_Connection){
         $lista_usuario = [];
 
@@ -168,50 +150,4 @@
 
         return $lista_usuario;
     }
-    /**
-     * Envia un mensaje de un usuario a otro
-     * 
-     * @param @$my_Db_Connection : Objeto conexion
-     * @param $usuario_origen
-     * @param $usuario_destino
-     * @param $texto
-     * 
-     * @return Lista de usuarios disponibles
-     */
-    function EnviarMensaje($my_Db_Connection,$usuario_origen,$usuario_destino,$texto){
-        $lista_usuario = [];
-
-        try {
-            $my_Insert_Statement = 
-            $my_Db_Connection->prepare("INSERT INTO `mensajes`(`Id`,`Usuario_origen`,`Usuario_destino`,`Texto`)".
-            "VALUES (':Usuario_origen',':Apellido',':Apellido' )");
-            
-            $my_Insert_Statement ->bindParams(':Usuario_origen', $usuario_origen);
-            $my_Insert_Statement ->bindParams(':Usuario_destino', $usuario_destino);
-            $my_Insert_Statement ->bindParams(':Texto', $texto);
-
-            if ($my_Insert_Statement->execute()) {
-                //echo "Nuevo Usuario Creado";
-                return TRUE;
-            }else{
-                //echo "No se pudo crear Usuario";
-                return FALSE;
-            }   
-
-        } catch (\Throwable $th) {
-            
-        }
-
-        return $lista_usuario;
-    }
-    function ListarMensajesRecibidos($my_Db_Connection){
-        
-    }
-    function ListarMensajesEnviados(){
-        
-    }
-    function BorrarMensaje(){
-        
-    }
-
 ?>
