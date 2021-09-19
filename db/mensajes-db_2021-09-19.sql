@@ -66,9 +66,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Usuario`, `Clave`, `Nombre`, `Apellido`, `FNacimiento`, `Color`, `Hijos`, `Foto`) VALUES
-('Dan', '97c8e6d0d14f4e242c3c37af68cc376c', 'Daniel', 'Morales', '2021-09-07', '#7318e2', 2, 'Lincolnchan98\'s_userpage_image.jpg'),
-('pepe', '202cb962ac59075b964b07152d234b70', 'Pepe', 'Pompan', '2000-01-01', NULL, NULL, NULL),
-('pipe', '2acb5c5ac1439f9159dc37e0a3a90f02', 'felipe', 'suarez', '2002-01-01', 'verde', 2, 'hola');
+('Dan', '97c8e6d0d14f4e242c3c37af68cc376c', 'Daniel', 'Morales', '2021-09-07', '#5cc196', 2, 'Lincolnchan98\s_userpage_image.jpg'),
+('pepe', '202cb962ac59075b964b07152d234b70', 'Pepe', 'Pompan', '2000-01-01', '#7318e2', 1, 'LogoJ&JTechNova.png'),
+('pipe', '2acb5c5ac1439f9159dc37e0a3a90f02', 'felipe', 'suarez', '2002-01-01', '#6064cd', 2, 'cara personaje.PNG');
 
 --
 -- Índices para tablas volcadas
