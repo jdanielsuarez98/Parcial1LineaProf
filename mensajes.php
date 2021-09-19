@@ -1,5 +1,5 @@
 <head></head>
-<body>
+<div>
     <h1>Mensajes</h1>
     <form method="post">
         <b> Enviar Mensajes </b><br>
@@ -42,4 +42,4 @@
     <?php
         
     ?>
-</body>
+</div>

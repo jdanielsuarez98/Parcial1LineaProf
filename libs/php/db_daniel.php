@@ -39,6 +39,61 @@
             return FALSE;
         }   
     }
+
+    function publicarTuit($my_Db_Connection,$usuario,$tuit){
+
+        $my_Insert_Statement=
+            $my_Db_Connection->prepare("INSERT INTO mensajes (Usuario,tuit)".
+            "VALUES (:Usuario, :tuit)");
+        $my_Insert_Statement->bindParam(':Usuario',$usuario);
+        $my_Insert_Statement->bindParam(':tuit',$tuit);
+
+        if ($my_Insert_Statement->execute()) {
+            '<script>alert("Compartido")</script>';
+            return TRUE;
+        }else{
+            echo "No se pudo compartir";
+            return FALSE;
+        }   
+    }
+
+
+
+
+    if (isset($_GET["Id"])) {
+
+        $Id=$_GET["Id"];
+
+        $my_Delete_Statement=
+            $my_Db_Connection->prepare("DELETE FROM `mensajes` WHERE `Id`=$Id");
+
+            $my_Delete_Statement->execute(['Usuario'=>$usuario,'tuit'=>$tuit]);
+
+        if ($my_Delete_Statement->execute()) {
+            '<script>alert("Eliminado")</script>';
+            return TRUE;
+        }else{
+            echo "No se pudo compartir";
+            return FALSE;
+        }   
+    }
+
+    function MostrarTuits($my_Db_Connection){
+        $lista_tuits = [];
+
+        try {
+            $my_Select_Statement = 
+            $my_Db_Connection->prepare("SELECT `Id`,`Usuario`,`tuit` FROM `mensajes`");
+            $my_Select_Statement->execute([]);
+            $lista_tuits = $my_Select_Statement-> fetchAll();
+            ;
+        } catch (\Throwable $th) {
+            
+        }
+
+        return $lista_tuits;
+    }
+
     function ActualizarUsuariosDB($my_Db_connetion,$usuario,$nombre,$apellido,$nacimiento,$cantidad_hijos,$color,$foto){
 
         $my_Insert_Statement=
@@ -79,8 +134,6 @@
         // $token = '';
         $my_Select_Statement = 
             $my_Db_Connection->prepare("SELECT `Usuario` FROM `usuarios` WHERE `Usuario`='$usuario' and `Clave`='$clave'");
-
-            echo "SELECT `Usuario` FROM `usuarios` WHERE `Usuario`='$usuario' and `Clave`='$clave'";
             
             $my_Select_Statement->execute(['Usuario'=>$usuario,'Clave'=>$clave]);
         $user = $my_Select_Statement->fetch();
