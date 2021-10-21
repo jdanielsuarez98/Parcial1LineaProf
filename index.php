@@ -1,4 +1,3 @@
-
 <?php
     $colorr = '';
     require_once "libs/php/tools_daniel.php";
@@ -49,8 +48,8 @@
         echo '<script>window.location.href="index.php"; </script>';
     }
     ?>
-    <div>
-    <div style="height: 100%; width:20%; float:left; padding: 5px; background-color: #AECBDE;">
+    <div style="text-align: center;">
+    <div style="height: 20%; width:100%; float:left; padding: 5px; background-color: #AECBDE;">
 <?php
             //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             // sesion abierta
